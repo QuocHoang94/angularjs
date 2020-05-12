@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="FormMember.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="styleform.css">
+    <title>Document</title>
+</head>
+<body ng-app="my_app" ng-controller="demo" ng-init="initForm()">
+    <div class="formsignin">
+        <form name="userForm"  novalidate>
+          <div class="container" >
+            <div class="form-group">
+              <label for="user"><span ng-show=" userForm.username.$error.required &&userForm.username.$touched" class="text-danger">*</span>User:</label>
+              <input type="text" class="form-control" placeholder="Enter user" name="username" ng-minlength="3" ng-maxlength="8" required ng-model="oMember.sUsername">
+              <span ng-show="userForm.username.$error.required && userForm.username.$dirty && userForm.username.$touched" class="text-danger">required</span>
+              <p ng-show="userForm.username.$error.minlength" class="text-danger">Username is too short[At least 3 characters]</p>
+              <p ng-show="userForm.username.$error.maxlength" class="text-danger">Username is too long[The most 8 characters]</p>
+              <span ng-show="userForm.username.$error.required && userForm.username.$touched" class="text-danger">Fill in this section</span>
+            </div>
+            <div class="form-group">
+              <label for="pwd"><span ng-show=" userForm.password.$error.required &&userForm.password.$touched" class="text-danger">*</span>Password:</label>
+              <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" ng-model="oMember.sPassword" ng-minlength="8" ng-maxlength="20" required>
+              <span ng-show="userForm.password.$error.required && userForm.password.$dirty && userForm.password.$touched" class="text-danger">required</span>
+              <span ng-show="!userForm.password.$error.required && (userForm.password.$error.minlength || userForm.password.$error.maxlength) && userForm.password.$dirty"  class="text-danger">Passwords must be between 8 and 20 characters.</span>
+              <span ng-show="userForm.password.$error.required && userForm.password.$touched" class="text-danger">Fill in this section</span>
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" ng-model="oMember.sEmail" required>
+              <span  ng-show="userForm.email.$error.required && userForm.email.$dirty && userForm.email.$touched" class="text-danger">required</span>
+              <span  ng-show="userForm.email.$error.email" class="text-danger">
+                Not valid email!</span>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone:</label>
+              <input type="text" class="form-control" placeholder="08-xxx-xxxxx" name="phone" ng-pattern="patternphoneNumber" ng-model="oMember.sPhone" required>
+              <span ng-show="userForm.phone.$error.required && userForm.phone.$dirty && userForm.phone.$touched" class="text-danger">required</span> 
+              <span ng-show="userForm.phone.$touched">[+08-xxx-xxxxx || 08-xxx-xxxxx || 08xxxxxxxx]</span>
+              <br><span class="text-danger" ng-show="userForm.phone.$error.pattern && userForm.phone.$invalid">Please Enter the Phone no matching  pattern [+08-xxx-xxxxx || 08-xxx-xxxxx]</span>
+            </div>
+            <button type="button" class="btn btn-primary" ng-disabled="!userForm.username.$valid || !userForm.password.$valid" ng-click="addtUser()" ng-if="!Submitedit">Submit</button>
+            <button type="button" class="btn btn-primary" ng-if="Submitedit" ng-click="submiteditUser(member)">SubmitEdit</button>
+          </div>
+        </form>
+      </div>
+</body>
+</html>
